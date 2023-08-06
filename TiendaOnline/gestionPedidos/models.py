@@ -4,17 +4,26 @@ from django.db import models
 
 class Clientes(models.Model):
     nombre = models.CharField(max_length=30)
-    direccion = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=50, verbose_name="La direccion")
     email=models.EmailField()
-    tfno = models.CharField(max_length=7)
+    tfno = models.CharField(max_length=7,verbose_name="Telefono")
+    
+    def __str__(self):
+        return self.nombre
     
 class Articulos(models.Model):
     nombre = models.CharField(max_length=30)
     seccion = models.CharField(max_length=20)
     precio=models.IntegerField()
     
+    def __str__(self):
+        return self.nombre
+    
 class Pedidos(models.Model):
-    numero = models.IntegerField()
+    numero = models.IntegerField(verbose_name="El numemro del pedido")
     fecha = models.DateField()
-    entregado = models.BooleanField()
+    entregado = models.BooleanField(verbose_name="Entregado?")
+    
+    def __str__(self):
+        return self.numero
     
