@@ -25,5 +25,5 @@ class Pedidos(models.Model):
     entregado = models.BooleanField(verbose_name="Entregado?")
     
     def __str__(self):
-        return self.numero
+        return str(self.numero)
     
