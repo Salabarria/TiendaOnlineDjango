@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from gestionPedidos.views import home,gui,penco,GestionPedidosViews
+from tasks.views import helloworld,signup
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,10 @@ urlpatterns = [
     path("clase/<id>",GestionPedidosViews.metodo1),
     path("hola", GestionPedidosViews.get),
     path('gp/', include("gestionPedidos.urls")),
+    
+    #-url for tasks app ------
+    path("tasks/", helloworld ),
+    path("signup/", signup ),
+    
+    
 ]
