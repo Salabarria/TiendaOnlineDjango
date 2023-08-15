@@ -3,15 +3,18 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login ,logout ,authenticate
+from tasks.forms import TaskForm
+from tasks.models import Task
 
 # Create your views here.
 
 # function views of the app tasks
+########################################################
 def home( request):
     myform = UserCreationForm()
     return  render(request,"home.html")
     #return render(request,'signup.html',{'form':myform})
-
+#####################################################################
 def signup(request):
     myform = UserCreationForm() 
     if request.method == "GET":
@@ -45,16 +48,47 @@ def signup(request):
                     })
        
        
-       
+#############################################################       
 def tasks(request):
+    # tasks = Task.objects.all()
+    tasks = Task.objects.filter(user = request.user)
+    print(tasks)
     data = " datos desde views.tasks()"
-    return render(request,"tasks.html",{"midata":data})  
-
-
+    return render(request,"tasks.html",{"mis_tareas":tasks})  
+###########################################################
+def create_task(request):
+    my_form_task = TaskForm()
+    if request.method == "GET":
+        # print(request.GET)
+        return render(request,"create_task.html",{
+            "form_task": my_form_task
+            })
+        #
+    else:
+        try: 
+            form_temp = TaskForm(request.POST)
+            print(form_temp)
+            print(request.POST)
+            new_task = form_temp.save(commit=False)
+            new_task.user = request.user
+            new_task.save()
+            # return render(request,"create_task.html",{
+            # "form_task": my_form_task  })
+            return redirect("tasks")
+           
+        except:
+            return render(request,"create_task.html",{
+            "form_task": my_form_task,
+            "error":"Please provide valida data"
+            
+            })
+            
+################################################################
 def signout(request):
     logout(request)
     return  redirect("home1") 
 
+#########################################################
 def signin(request):
     my_auth_form = AuthenticationForm()
     if request.method == "GET":
@@ -72,9 +106,17 @@ def signin(request):
          else:
              login(request,user_valid)
              return redirect("tasks")
-             
+############################################################v             
                 
+def task_detail(request,task_id):
     
+    task = Task.objects.get(id = task_id)
+    
+    print(task.title)
+    return render(request,"task_detail.html",{
+                 "title":task.title,
+                                  
+                 }) 
          
 
-
+############################################################v  
