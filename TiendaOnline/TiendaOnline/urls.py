@@ -39,7 +39,8 @@ urlpatterns = [
     
     #-url for projects app ------
     
-    path('', include("projects.urls")),
+    path('projects_app/', include("projects.urls")),
+    
     
     
 ]
