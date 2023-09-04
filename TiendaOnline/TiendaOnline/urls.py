@@ -19,6 +19,8 @@ from django.urls import path,include
 from gestionPedidos.views import home,gui,penco,GestionPedidosViews
 from tasks import views
 
+from rest_framework.documentation import include_docs_urls
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path( "home/", home),
@@ -37,10 +39,10 @@ urlpatterns = [
     path("task/create/", views.create_task,name = "create_task"),
     path("task/<int:task_id>/", views.task_detail,name = "task_detail"),
     
-    #-url for projects app ------
+    #-url for projects app rest framework django  ------
     
     path('projects_app/', include("projects.urls")),
-    
+    path('docs/',include_docs_urls(title='api documentation'))    
     
     
 ]

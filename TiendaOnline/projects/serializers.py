@@ -11,17 +11,10 @@ class ProjectSerializer1(serializers.ModelSerializer):
         model = Project
         fields = ("title","description","technology")
         
-# class ProjSeria(serializers.ModelSerializer):
-#     datel = serializers.DateTimeField(default_timezone=True)
-    
-#     class Meta:
-#         model = Project
-#         fields = ("title","description","datel")
-
 class TrackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Track
-        fields = ['order', 'title', 'duration']
+        fields = ['album','order', 'title', 'duration']
         
 class AlbumSerializer(serializers.ModelSerializer):
     tracks = TrackSerializer(many=True, read_only=True)
